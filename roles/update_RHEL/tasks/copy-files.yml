@@ -1,0 +1,27 @@
+- name: Copying the Linux Checklist script server
+  copy:
+    src: /home/fsouza3/ansible/hc/roles/update_RHEL/files/chk_list_linux.sh
+    dest: /usr/bin/
+    owner: root
+    group: root
+    mode: 0755
+  tags: copy_chk_linux
+  register: chk_linux_copy
+
+- name: Debug Copying the Linux Checklist script server
+  debug:
+    msg: "{{ chk_linux_copy }}"
+
+- name: Copying the proxy file configuration to RHEL remote host
+  copy:
+    src: /home/fsouza3/ansible/hc/roles/update_RHEL/files/rhsm.conf
+    dest: /etc/rhsm/
+    owner: root
+    group: root
+    mode: 0644
+  tags: copy_proxy_file_rhel
+  register: proxy_copy
+
+- name: Debug Copying the proxy file configuration to RHEL remote host
+  debug:
+    msg: "{{ proxy_copy }}"

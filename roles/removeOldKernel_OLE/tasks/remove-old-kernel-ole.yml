@@ -1,0 +1,27 @@
+---
+# tasks file for KROTON servers
+
+- name: Removing  the Old Oracle Kernel version
+  shell: rpm -q kernel-uek | grep -v `uname -r` | xargs -i yum remove {} -y
+  args:
+    warn: no
+  register: OldKernelVersion
+  tags: OldKernelVersion_tags
+  when: ansible_distribution == "OracleLinux"
+
+- name: Debug Removing the Old Kernel Version
+  debug:
+    msg: "{{ OldKernelVersion }}"
+
+- name: Removing the Old RHEL Kernel Version
+  shell: rpm -q kernel | head -n -1 | xargs -i yum remove {} -y
+  args:
+    warn: no
+  register: OldRelKernelVersion
+  tags: OldRelKernelVersion_tags
+  when: ansible_distribution == "OracleLinux"
+
+- name: Debug Removing the Old Kernel Version
+  debug:
+    msg: "{{ OldRelKernelVersion }}"
+

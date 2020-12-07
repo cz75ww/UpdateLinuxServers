@@ -1,0 +1,16 @@
+# tasks file for HC - Register-RHEL
+
+- name: Register as user (fpsouza) with password  and auto-subscribe to available content.
+  redhat_subscription:
+    state: present
+    username: "{{ user }}"
+    password: "{{ passwd }}"
+    auto_attach: true
+  when: ansible_facts['distribution'] == "RedHat"
+  tags: register_rhel
+  register: subscription_rhel
+  ignore_errors: yes
+
+- name: Debug RHEL Subscription process on remote hosts
+  debug:
+    msg: "{{ subscription_rhel }}"

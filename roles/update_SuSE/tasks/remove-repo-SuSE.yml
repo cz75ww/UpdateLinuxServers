@@ -1,0 +1,13 @@
+# tasks file for roles/Ansible_test
+
+- name: Remove Old Repository
+  shell: zypper lr | awk -F "|" '{print $3}' | grep -v Name | xargs -i zypper removerepo {}
+  args:
+    warn: no
+  register: remove_old_repo_suse
+  tags: remove_old_repo_suse_tag
+
+- name: Debug Remove Old Repository
+  debug:
+    msg: "{{ remove_old_repo_suse }}"
+

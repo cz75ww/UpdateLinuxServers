@@ -1,0 +1,6 @@
+---
+# tasks file for update_RHEL
+  - import_tasks: unregister-OS.yml
+  - import_tasks: copy-files.yml
+  - import_tasks: register-OS.yml
+  - import_tasks: update-task.yml

@@ -1,0 +1,6 @@
+---
+# vars file for ./update_SuSE
+# vars file for roles/Ansible_test
+ email: " fabiano.souza@t-systems.com "
+ http: "  http_proxy=http://160.118.134.76:8080 "
+ https: " https_proxy=http://160.118.134.76:8080 "

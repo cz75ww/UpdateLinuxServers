@@ -1,0 +1,14 @@
+# tasks file for HC - Unregister-RHEL
+
+- name: Unregister as user (fpsouza) with password
+  redhat_subscription:
+    state: absent
+    username: "{{ user }}"
+    password: "{{ passwd }}"
+  when: ansible_facts['os_family'] == "RedHat"
+  tags: unregister_rhel
+  register: unreg_rhel
+
+- name: Debug Unregister processo on remote hosts
+  debug:
+    msg: "{{ unreg_rhel }}"

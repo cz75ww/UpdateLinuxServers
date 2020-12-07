@@ -1,0 +1,5 @@
+---
+# tasks file for removeOldKernel_OLE
+
+  - import_tasks: remove-old-kernel-ole.yml
+  - import_tasks: reboot-process-ole.yml

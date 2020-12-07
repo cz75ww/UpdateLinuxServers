@@ -1,0 +1,44 @@
+# tasks file for roles/Ansible_test - Copy files to remote host
+
+- name: Copying the proxy file configuration to RHEL remote host
+  copy:
+    src: /home/fsouza3/ansible/ardagh/roles/update_SuSE/files/proxy
+    dest: /etc/sysconfig
+    owner: root
+    group: root
+    mode: 0644
+  tags: copy_proxy_file_suse
+  register: proxy_copy_suse
+
+- name: Debug Copying the proxy file configuration to RHEL remote host
+  debug:
+    msg: "{{ proxy_copy_suse }}"
+
+- name: Copying the motd file to server
+  copy:
+    src: /home/fsouza3/ansible/ardagh/roles/update_SuSE/files/motd
+    dest: /etc/
+  register: copy_motd_file
+  tags: copy_motd_tag
+
+- name: Debug copying the motd file to server
+  debug:
+    msg: "{{ copy_motd_file }}"
+
+- name: Copying the Linux Checklist script server
+  copy:
+    src: /home/fsouza3/ansible/ardagh/roles/update_SuSE/files/chk_list_linux.sh
+    dest: /usr/bin/
+    owner: root
+    group: root
+    mode: 0755
+  tags: copy_chk_linux
+  register: chk_linux_copy
+
+- name: Settings chk_list_Linux.sh script in crontab 
+  cron:
+    name: "By Fabiano Prospero | Unix healthcheck script | Log files on path /home/tech/data/checklist"
+    user: "root"
+    minute: 00
+    hour: 23
+    job: "/usr/bin/chk_list_linux.sh -g  > /dev/null 2>&1"

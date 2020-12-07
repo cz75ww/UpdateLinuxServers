@@ -1,0 +1,8 @@
+---
+# tasks file for ./update_SuSE
+
+  - import_tasks: remove-repo-SuSE.yml
+    #  - import_tasks: copy-files.yml
+  - import_tasks: register-OS-SuSE.yml
+  - import_tasks: update-task.yml
+  - import_tasks: unregister-OS-SuSE.yml

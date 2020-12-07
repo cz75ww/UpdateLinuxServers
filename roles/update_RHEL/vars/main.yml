@@ -1,0 +1,7 @@
+---
+# vars file for update_RHEL
+  user: " fpsouza "
+  passwd: " Fodase@1 "
+
+# Path to RHEL repository
+  path_to_repo_rhel: " /etc/yum.repos.d/redhat.repo "

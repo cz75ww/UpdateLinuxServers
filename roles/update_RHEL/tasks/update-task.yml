@@ -1,0 +1,77 @@
+---
+# tasks file for HC Servers
+
+## STAT TASK FOR RHEL SERVERS ##
+
+- name: Create a old directory if it doesn't exist
+  file:
+    path: /etc/yum.repos.d/old
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Move the /etc/yum.repos.d/redhat.repo to /etc/yum.repos.d/old
+  command: mv /etc/yum.repos.d/redhat.repo /etc/yum.repos.d/old
+  register: move_repo
+  tags: move_repo_rhel
+
+- name: Debug move repository process
+  debug:
+    msg: "{{ move_repo }}"
+
+
+- name: Running subscription-manager repos
+  command: subscription-manager repos
+
+- name: Cleaning yum metadata cache
+  command: yum clean all
+  args:
+    warn: no
+  register: yum_clean_all
+
+- name: Debug yum clean all
+  debug:
+    msg: "{{ yum_clean_all }}"
+
+#- name: Listing all package to be installed on remote host
+#  yum:
+#   list: '*'
+#  register: yum_list
+
+#- name: Debug yum list command line
+#  debug:
+#    msg: "{{ yum_list }}"
+
+- name: Checking if there are some updates to be done
+  yum:
+   list: 'updates'
+  register: yum_check_updates
+  tags: yum_updates
+
+- name: Debug yum check updates
+  debug:
+    msg: "{{ yum_check_updates }}"
+
+- name: Updating yum packages
+  yum:
+    name: '*'
+    state: latest
+    update_only: yes
+  register: yum_contents
+
+- name: Debug yum command line output
+  debug:
+    msg: "{{ yum_contents }}"
+
+- name: Reboot  process on servers
+  reboot:
+    reboot_timeout: 3600
+  register: reboot_server
+  tags: reboot_command
+  when: reboot_process == 'yes'
+
+
+- name: Debug reboot process on servers
+  debug:
+    msg: "{{ reboot_server }}"

@@ -1,0 +1,53 @@
+---
+# tasks file for roles/Ansible_test
+- name: List all repositories on host
+  command: zypper lr
+  args:
+    warn: no
+  register: list_repo_suse
+  tags: list_repo_suse_tag
+
+- name: Debug List all repositories on host
+  debug:
+    msg: "{{ list_repo_suse }}"
+
+#- name: Refresh All Repositories
+#  command: zypper ref -s
+#  args:
+#    warn: no
+#  register: refresh_repo
+#  tags: refresh_repo_tag
+#  environment:
+#    http_proxy: http://160.118.134.76:8080
+#    https_proxy: http://160.118.134.76:8080 
+
+#- name: Debug Refresh All Repositories
+#  debug:
+#    msg: "{{ refresh_repo }}"
+
+- name: Update the OS on host
+  zypper:
+    name: '*'
+    state: latest 
+  register: update_suse
+  tags: update_suse_tag
+  environment:
+    http_proxy: http://160.118.134.76:8080
+    https_proxy: http://160.118.134.76:8080 
+
+- name: Debug update the OS on host
+  debug: 
+    msg: "{{ update_suse }}"
+
+- name: Reboot  process on servers
+  reboot:
+    reboot_timeout: 3600
+  register: reboot_server
+  tags: reboot_command
+  when: reboot_process == 'yes'
+
+- name: Debug reboot process on servers
+  debug:
+    msg: "{{ reboot_server }}"
+
+

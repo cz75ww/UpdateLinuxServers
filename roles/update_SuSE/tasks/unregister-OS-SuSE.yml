@@ -1,0 +1,17 @@
+---
+# tasks file for roles/Ansible_test
+
+
+- name: Unregister host on SuSE
+  command: SUSEConnect -d 
+  args:
+   warn: no
+  environment:
+    http_proxy: http://160.118.134.76:8080
+    https_proxy: http://160.118.134.76:8080 
+  register: unregister_suse
+  tags: unregister_suse_tag
+
+- name: Debug Unregister host on SuSE
+  debug:
+    msg: "{{ unregister_suse }}"

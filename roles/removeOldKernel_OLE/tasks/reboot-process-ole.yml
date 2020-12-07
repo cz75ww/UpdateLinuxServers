@@ -1,0 +1,13 @@
+---
+# tasks file for Kroton Servers
+
+- name: Reboot  process on servers
+  reboot:
+    reboot_timeout: 3600
+  register: reboot_server
+  tags: reboot_command
+  when: reboot_system == 'yes'
+
+- name: Debug reboot process on servers
+  debug:
+    msg: "{{ reboot_server }}"

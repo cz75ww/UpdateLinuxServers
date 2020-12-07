@@ -1,0 +1,15 @@
+# tasks file for roles/Ansible_test - RegisterSuSE
+- name: Activating SuSE subscription on host
+  command: SUSEConnect -r 7D11243FA28320 -e fabiano.souza@t-systems.com –debug
+  register: register_Suse
+  tags: register_Suse_tag
+  environment:
+    http_proxy: http://160.118.134.76:8080
+    https_proxy: http://160.118.134.76:8080 
+
+  #  when: ansible_facts['distribution'] == "SLES"
+
+- name: Debug Activating SuSE subscription on host
+  debug:
+    msg: "{{ register_Suse }}"
+  #  when: ansible_facts['distribution'] == "SLES"
