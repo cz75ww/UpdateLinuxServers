@@ -1,0 +1,15 @@
+# yum-update.yml
+
+---
+  - hosts: PRD_SERVERS
+    become: true
+
+    vars_prompt:
+
+      - name: "reboot_process"
+        prompt: " ATTETION: reboot the hosts after update task? \n
+                Type yes: "
+        private: no
+
+    roles:
+      - /home/fsouza3/ansible/ardagh/roles/update_OLE

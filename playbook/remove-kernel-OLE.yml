@@ -1,0 +1,15 @@
+# remove-kernel.yml
+
+---
+  - hosts: PRD_SERVERS
+    become: true
+
+    vars_prompt:
+      - name: "reboot_system"
+        prompt: " ATTETION: Do you wanna reboot the system after remove old kernel? \n
+                 Type yes to continue: "
+        private: no
+
+
+    roles:
+      - /home/fsouza3/ansible/ardagh/roles/removeOldKernel_OLE
